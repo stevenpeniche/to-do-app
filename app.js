@@ -3,7 +3,7 @@ var onReady = function(){
   const addToDoForm = document.getElementById('addToDoForm');
   const newToDoText = document.getElementById('newToDoText');
   const toDoList = document.getElementById('toDoList');
-
+  // listens for submit press..
   addToDoForm.addEventListener('submit', (event) => {
     // prevents default form behavior of reloading page..
     event.preventDefault();
@@ -31,6 +31,11 @@ var onReady = function(){
 
         // set the text on the button..
         deleteButton.textContent = 'Delete';
+
+        // listens for delete press..
+        deleteButton.addEventListener('click', (event) => {
+          toDoList.removeChild(newLi);
+        });
 
     // attach it to the ul..
     toDoList.appendChild(newLi);
