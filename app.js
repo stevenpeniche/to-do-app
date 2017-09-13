@@ -1,38 +1,45 @@
-// ..
 var onReady = function(){
-  // selects the html elements..
-  const addToDoForm = document.getElementById('addToDoForm');
-  const newToDoText = document.getElementById('newToDoText');
-  const toDoList = document.getElementById('toDoList');
-  //
-  addToDoForm.addEventListener('submit', (event) => {
-    // prevents default form behavior of reloading page..
-    event.preventDefault();
+  // state..
+  var toDos = [];
+  var addToDoForm = document.getElementById('addToDoForm');
 
-    // get the text..
-    let title = newToDoText.value;
+  function createNewToDo() {
+    var newToDoText = document.getElementById('newToDoText');
+    // updates state..
+    toDos.push({
+      title: newToDoText.value,
+      complete: false
+    });
 
-    // create a new li..
-    let newLi = document.createElement('li');
+    newToDoText.value = '';// clears the text input
 
-    // create a new input for the checkbox..
-    let checkbox = document.createElement('input');
+    renderTheUI(toDos);// calls the renderTheUI function
+  }
+  // renders the UI..
+  function renderTheUI(toDos) {
+    var toDoList = document.getElementById('toDoList');
 
-    // set the input's type to checkbox..
-    checkbox.type = 'checkbox';
+    toDoList.innerHTML = '';// ?
 
-    // set the title..
-    newLi.textContent = title;
+    // applies function to each item in the array..
+    toDos.forEach(function(todo) {
+      var newLi = document.createElement('li');// creates new line variable
+      var checkbox = document.createElement('input');// creates input variable
+      checkbox.type = 'checkbox';// sets input type to checkbox
 
-    // attach it to the ul..
-    toDoList.appendChild(newLi);
+      newLi.innerHTML = toDo.title;// sets value of inner html for new line
 
-    // attach the checkbox to the li..
-    newLi.appendChild(checkbox);
-
-    // empty the input..
-    newToDoText.value = '';
+      toDoList.appendChild(newLi);// new line
+      newLi.appendChild(checkbox);// adds checkbox to that line
+    });
+  }
+  // listens for submit button press..
+  addToDoForm.addEventListener('submit', function(event) {
+    event.preventDefault();// prevents default reload page action
+    createNewToDo();// calls the createNewToDo function
   });
+
+  renderTheUI(todos);
 };
 
 // runs when the page is done loading..
