@@ -3,6 +3,7 @@ var onReady = function(){
   var toDos = [];
   var addToDoForm = document.getElementById('addToDoForm');
 
+  // creates new to-do..
   function createNewToDo() {
     var newToDoText = document.getElementById('newToDoText');
     // updates state..
@@ -22,24 +23,26 @@ var onReady = function(){
     toDoList.innerHTML = '';// ?
 
     // applies function to each item in the array..
-    toDos.forEach(function(todo) {
-      var newLi = document.createElement('li');// creates new line variable
-      var checkbox = document.createElement('input');// creates input variable
+    toDos.forEach(function(toDo) {
+      var newLi = document.createElement('li');
+      var checkbox = document.createElement('input');
+
       checkbox.type = 'checkbox';// sets input type to checkbox
+      
+      newLi.innerHTML = toDo.title;// sets inner html(text) for new line
 
-      newLi.innerHTML = toDo.title;// sets value of inner html for new line
-
-      toDoList.appendChild(newLi);// new line
+      toDoList.appendChild(newLi);// adds new line to list
       newLi.appendChild(checkbox);// adds checkbox to that line
     });
   }
   // listens for submit button press..
-  addToDoForm.addEventListener('submit', function(event) {
+  addToDoForm.addEventListener('submit', (event) => {
     event.preventDefault();// prevents default reload page action
     createNewToDo();// calls the createNewToDo function
+    console.log(toDos);
   });
 
-  renderTheUI(todos);
+  renderTheUI(toDos);
 };
 
 // runs when the page is done loading..
