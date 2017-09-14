@@ -1,11 +1,11 @@
 var onReady = function(){
-  // state..
-  var toDos = [];
+  var toDos = [];// "state"
   var addToDoForm = document.getElementById('addToDoForm');
 
+  // creates new to-do..
   function createNewToDo() {
     var newToDoText = document.getElementById('newToDoText');
-    // updates state..
+    // updates "state"..
     toDos.push({
       title: newToDoText.value,
       complete: false
@@ -13,33 +13,47 @@ var onReady = function(){
 
     newToDoText.value = '';// clears the text input
 
-    renderTheUI(toDos);// calls the renderTheUI function
+    renderTheUI(toDos);// calls function to render the UI
   }
+
   // renders the UI..
   function renderTheUI(toDos) {
     var toDoList = document.getElementById('toDoList');
 
-    toDoList.innerHTML = '';// ?
+    toDoList.innerHTML = '';// clears the toDoList var so it isn't repeated
 
-    // applies function to each item in the array..
-    toDos.forEach(function(todo) {
-      var newLi = document.createElement('li');// creates new line variable
-      var checkbox = document.createElement('input');// creates input variable
+    // applies a function to each item in the array..
+    toDos.forEach((toDo) => {
+      var newLi = document.createElement('li');
+      var checkbox = document.createElement('input');
+      var deleteButton = document.createElement('button');
+
       checkbox.type = 'checkbox';// sets input type to checkbox
+      deleteButton.type = 'button';
 
-      newLi.innerHTML = toDo.title;// sets value of inner html for new line
+      newLi.innerHTML = toDo.title;// sets text for new line(to-do)
+      deleteButton.innerHTML = 'Delete';// sets text on button
 
-      toDoList.appendChild(newLi);// new line
+      toDoList.appendChild(newLi);// adds new line(to-do) to list
       newLi.appendChild(checkbox);// adds checkbox to that line
+      newLi.appendChild(deleteButton);// adds delete button to that line
+
+      // listens for delete button press..
+      deleteButton.addEventListener('click', (event) => {
+        event.preventDefault();// prevents default reload page action
+        // deletes to-do..
+        (function deleteToDo(){
+          var list = toDos;
+          toDoList.removeChild(newLi);
+        })();
+      });
     });
   }
   // listens for submit button press..
-  addToDoForm.addEventListener('submit', function(event) {
+  addToDoForm.addEventListener('submit', (event) => {
     event.preventDefault();// prevents default reload page action
     createNewToDo();// calls the createNewToDo function
   });
-
-  renderTheUI(todos);
 };
 
 // runs when the page is done loading..
